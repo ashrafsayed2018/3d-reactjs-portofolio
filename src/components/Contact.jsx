@@ -14,8 +14,46 @@ const Contact = () => {
   });
   const [loading, setLoading] = useState(false);
   const formRef = useRef();
-  const handleChange = (e) => {};
-  const handleSubmit = (e) => {};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // template_oyz4n4y
+    // service_vf8jwm7
+    // JexOJKc6EUGNv7B9J
+    emailjs
+      .send(
+        "service_vf8jwm7",
+        "template_oyz4n4y",
+        {
+          from_name: form.name,
+          to_name: "khadamatk",
+          from_email: form.email,
+          to_email: "khadamatkkw@gmail.com",
+          message: form.message,
+        },
+        "JexOJKc6EUGNv7B9J"
+      )
+      .then(
+        () => {
+          setLoading(false);
+          alert("message is sent successfuly");
+          setForm({
+            name: "",
+            email: "",
+            message: "",
+          });
+        },
+        (error) => {
+          setLoading(false);
+          console.log(error);
+          alert("something wrong");
+        }
+      );
+  };
   return (
     <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
       <motion.div
@@ -61,6 +99,7 @@ const Contact = () => {
           <button
             className="outline-none bg-tertiary px-8 py-3 w-fit text-white shadow-md shadow-primary font-bold rounded-xl"
             type="submit"
+            onClick={handleSubmit}
           >
             {loading ? "sending..." : "send"}
           </button>
